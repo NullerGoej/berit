@@ -12,7 +12,7 @@ interface Task {
     done: boolean;
 }
 
-var taskUri: string = "https://berit.azurewebsites.net/api/task/";
+var uri: string = "https://berit.azurewebsites.net/api/";
 
 let Return: HTMLDivElement = <HTMLDivElement>document.getElementById("return");
 
@@ -24,13 +24,14 @@ ShowTasksB.addEventListener("click", ShowTasks)
 
 function AddTask(): void {
     let title: string = (<HTMLInputElement>document.getElementById("taskTitle")).value;
-    axios.post<Task>(taskUri, {uid: 1, description: title})
+    let tempUri: string = uri + ""
+    axios.post<Task>(tempUri, {uid: 1, description: title})
         .then((response: AxiosResponse) => { Return.innerHTML = "response " + response.status + " " + response.statusText; })
         .catch((error: AxiosError) => { Return.innerHTML = ""+error; });
 }
 
 function ShowTasks(): void {
-    axios.get<Task[]>(taskUri)
+    axios.get<Task[]>(uri + "task")
         .then(function (response: AxiosResponse<Task[]>): void {
             let result: string = "<table><tr>"+
             "<th>Tid</th>"+

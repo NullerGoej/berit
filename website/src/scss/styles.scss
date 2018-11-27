@@ -1,0 +1,40 @@
+$fontColor: #0091aa;
+$colorHeading: #be4a14;
+body
+{ 
+    text-align: center;
+    padding: 150px;
+    font: 20px Helvetica, sans-serif;
+    color: #333;
+}
+#content  // div with id: content
+{
+    color: $fontColor;
+}
+
+h2
+{
+    font-size: 35px;
+}
+
+h1{
+    @extend h2;
+    font-size: 50px;
+}
+article
+{ 
+    display: block;
+    text-align: left;
+    width: 650px;
+    margin: 0 auto; 
+}
+a 
+{ 
+    color: #dc8100;
+    text-decoration: none;
+}
+a:hover
+{ 
+    color: #333;
+    text-decoration: none;
+}

@@ -1,1 +1,1 @@
-<p align="center"><img src="https://azure.microsoft.com/svghandler/batch-ai?width=600&height=315"/></p>
+<p align="center"><img src="https://i.imgur.com/2ucKCbh.png"/></p>

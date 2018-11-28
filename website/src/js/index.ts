@@ -14,7 +14,7 @@ interface Task {
 
 var loading: string = "<h1>Loading...</h1>";
 
-var uri: string = "http://berit.azurewebsites.net/api/";
+var uri: string = "https://berit.azurewebsites.net/api/";
 
 let Return: HTMLDivElement = <HTMLDivElement>document.getElementById("return");
 
@@ -105,15 +105,10 @@ function ShowCompletedTasks(): void {
     })
 }
 
-
-
-// User story vagner
-// "Kunne slette en task så den ikke bliver vist på todo og ikke kommer listen af gennemførte tasks"
-
 // Vagner
 // Deletes a task completely from the database
 function DeleteTask(tid: string): void {
-    axios.delete(uri + "task", { data: { tid: tid } })
+    axios.delete(uri + "task/" + tid)
         .then((response: AxiosResponse) => { Return.innerHTML = "response " + response.status + " " + response.statusText; })
         .catch((error: AxiosError) => { Return.innerHTML = ""+error; });
 }

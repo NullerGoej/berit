@@ -112,7 +112,7 @@ namespace RestBerit.Controllers
         [HttpPut("{id}")]
         public Alarmsounds Put(int id, [FromBody] Alarmsounds alarmsound)
         {
-            string updateSql = "UPDATE Alarmsounds SET (title, soundfile) values (@title, @soundfile) Where tid = @asid";
+            string updateSql = "UPDATE Alarmsounds SET title = @title, soundfile = @soundfile WHERE asid = @asid";
 
             using (SqlConnection dbConnection = new SqlConnection(connection))
             {
@@ -122,10 +122,10 @@ namespace RestBerit.Controllers
                 {
                     updateCommand.Parameters.AddWithValue("@asid", id);
 
-                    if (alarmsound.title != null)
+                    if (alarmsound.title != "")
                     { updateCommand.Parameters.AddWithValue("@title", alarmsound.title); }
 
-                    if (alarmsound.soundfile != null)
+                    if (alarmsound.soundfile != "")
                     { updateCommand.Parameters.AddWithValue("@soundfile", alarmsound.soundfile); }
 
                     int rowsAffected = updateCommand.ExecuteNonQuery();

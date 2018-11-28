@@ -121,16 +121,15 @@ namespace RestBerit.Controllers
         [HttpPut("{id}")]
         public Users Put(int id, [FromBody] Users user)
         {
-            string updateSql = "UPDATE Users SET (username, password, firstname, lastname, asid) values (@username, @password, @firstname, @lastname, @asid) Where uid = @uid";
+            string updateSql = "UPDATE Users SET username = @username, password = @password, firstname = @firstname, lastname = @lastname, asid = @asid WHERE uid = @uid";
+            Users tempUser = GetOneUser(id);
 
             using (SqlConnection dbConnection = new SqlConnection(connection))
             {
                 dbConnection.Open();
 
                 using (SqlCommand updateCommand = new SqlCommand(updateSql, dbConnection))
-                {
-                    Users tempUser = GetOneUser(id);
-
+                {             
                     updateCommand.Parameters.AddWithValue("@uid", id);
 
                     if (user.username != "")
@@ -153,7 +152,7 @@ namespace RestBerit.Controllers
                         updateCommand.Parameters.AddWithValue("@lastname", user.lastname);
                     }
 
-                    if (user.asid != null)
+                    if (user.asid != tempUser.asid)
                     {
                         updateCommand.Parameters.AddWithValue("@asid", user.asid);
                     }

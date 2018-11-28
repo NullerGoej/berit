@@ -27,9 +27,13 @@ ShowTasksB.addEventListener("click", ShowTasks)
 let ShowCompletedTasksB: HTMLButtonElement = <HTMLButtonElement>document.getElementById("showCompletedTasks");
 ShowCompletedTasksB.addEventListener("click", ShowCompletedTasks);
 
+let DeleteTaskInp: HTMLInputElement = <HTMLInputElement>document.getElementById("taskIdInp");
+let DeleteTaskB: HTMLButtonElement = <HTMLButtonElement>document.getElementById("deleteTask");
+DeleteTaskB.addEventListener("click", function() { DeleteTask(DeleteTaskInp.value); });
+
 function AddTask(): void {
     let title: string = (<HTMLInputElement>document.getElementById("taskTitle")).value;
-    let tempUri: string = uri + ""
+    let tempUri: string = uri + "task"
     axios.post<Task>(tempUri, {uid: 1, description: title})
         .then((response: AxiosResponse) => { Return.innerHTML = "response " + response.status + " " + response.statusText; })
         .catch((error: AxiosError) => { Return.innerHTML = ""+error; });
@@ -56,7 +60,7 @@ function ShowTasks(): void {
                 + "<td>" + task.timestamp + "</td>"
                 + "<td>" + task.endstamp + "</td>"
                 + "<td>" + task.description + "</td>"
-                + "<td>" + task.done + "</td></tr>";
+                + "<td>" + task.done + "</td></tr>"
             })
             result += "</table>";
 
@@ -100,4 +104,17 @@ function ShowCompletedTasks(): void {
     .catch(function (error: AxiosError): void {
         Return.innerHTML = ""+error;
     })
+}
+
+
+
+// User story vagner
+// "Kunne slette en task så den ikke bliver vist på todo og ikke kommer listen af gennemførte tasks"
+
+// Vagner
+// Deletes a task completely from the database
+function DeleteTask(tid: string): void {
+    axios.delete(uri + "task", { data: { tid: tid } })
+        .then((response: AxiosResponse) => { Return.innerHTML = "response " + response.status + " " + response.statusText; })
+        .catch((error: AxiosError) => { Return.innerHTML = ""+error; });
 }

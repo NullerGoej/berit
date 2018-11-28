@@ -101,7 +101,7 @@ namespace RestBerit.Controllers
         [HttpPost]
         public void Post([FromBody] Alarms alarm)
         {
-            string insertSql = "INSERT INTO Alarms(uid, asid) values (@uid, @asid)";
+            string insertSql = "INSERT INTO Alarms(uid, timestamp, asid) values (@uid, @timestamp, @asid)";
 
             using (SqlConnection dbConnection = new SqlConnection(connection))
             {
@@ -110,6 +110,7 @@ namespace RestBerit.Controllers
                 using (SqlCommand insertCommand = new SqlCommand(insertSql, dbConnection))
                 {
                     insertCommand.Parameters.AddWithValue("@uid", alarm.uid);
+                    insertCommand.Parameters.AddWithValue("@timestamp", DateTime.Now);
                     insertCommand.Parameters.AddWithValue("@asid", alarm.asid);
 
                     int rowsAffected = insertCommand.ExecuteNonQuery();
@@ -125,7 +126,7 @@ namespace RestBerit.Controllers
             Alarms tempAlarm = GetOneAlarm(id);
             string updateSql;
 
-            updateSql = "UPDATE Alarms SET uid = @uid, asid = @asid WHERE aid = @aid";
+            updateSql = "UPDATE Alarms SET uid = @uid, timestamp = @timestamp, asid = @asid WHERE aid = @aid";
             
 
 
@@ -144,6 +145,10 @@ namespace RestBerit.Controllers
                         updateCommand.Parameters.AddWithValue("@uid", alarm.uid);
                     }
 
+                    if (tempAlarm.timestamp != alarm.timestamp)
+                    {
+                        updateCommand.Parameters.AddWithValue("@timestamp", alarm.timestamp);
+                    }
 
                     if (tempAlarm.asid != alarm.asid)
                     {

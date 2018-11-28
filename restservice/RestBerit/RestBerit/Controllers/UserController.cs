@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using RestBerit.Model;
 
@@ -21,20 +22,27 @@ namespace RestBerit.Controllers
         {
             var result = new List<Users>();
 
+            //SQL command
             string getSql = "SELECT * FROM Users";
 
+            //SQL connection
             using (SqlConnection dbConnection = new SqlConnection(connection))
             {
+                //SQL command
                 dbConnection.Open();
 
+                //SQL command
                 using (SqlCommand getSpecificCommand = new SqlCommand(getSql, dbConnection))
                 {
+                    //SQL data reader
                     using (SqlDataReader reader = getSpecificCommand.ExecuteReader())
                     {
                         if (reader.HasRows)
                         {
+                            //SQL data reader + reading data
                             while (reader.Read())
                             {
+
                                 int uid = reader.GetInt32(0);
                                 string username = reader.GetString(1);
                                 string password = reader.GetString(2);

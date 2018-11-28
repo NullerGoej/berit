@@ -12,3 +12,4 @@ C:\Users\Sander\Desktop\Project Berit\berit\restservice\RestBerit\RestBerit\obj\
 C:\Users\Sander\Desktop\Project Berit\berit\restservice\RestBerit\RestBerit\bin\Debug\netcoreapp2.1\RestBerit.pdb
 C:\Users\Sander\Desktop\Project Berit\berit\restservice\RestBerit\RestBerit\obj\Debug\netcoreapp2.1\RestBerit.dll
 C:\Users\Sander\Desktop\Project Berit\berit\restservice\RestBerit\RestBerit\obj\Debug\netcoreapp2.1\RestBerit.pdb
+C:\Users\Sander\Desktop\Project Berit\berit\restservice\RestBerit\RestBerit\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs

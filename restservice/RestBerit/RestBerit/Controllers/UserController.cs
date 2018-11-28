@@ -55,8 +55,8 @@ namespace RestBerit.Controllers
         }
 
         // GET: api/User/id
-        [HttpGet("{id}", Name = "Get")]
-        public Users GetSpecific(int id)
+        [HttpGet("{id}", Name = "GetUser")]
+        public Users GetOneUser(int id)
         {
             var result = new List<Users>();
 
@@ -151,7 +151,7 @@ namespace RestBerit.Controllers
                     Console.WriteLine(rowsAffected + " row(s) affected");
                 }
             }
-            return GetSpecific(id);
+            return GetOneUser(id);
         }
 
         // DELETE: api/ApiWithActions/5

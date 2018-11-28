@@ -53,8 +53,8 @@ namespace RestBerit.Controllers
         }
 
         // GET: api/Alarm/id
-        [HttpGet("{id}", Name = "Get")]
-        public Alarms GetSpecific(int id)
+        [HttpGet("{id}", Name = "GetAlarm")]
+        public Alarms GetOneAlarm(int id)
         {
             var result = new List<Alarms>();
 
@@ -139,7 +139,7 @@ namespace RestBerit.Controllers
                     Console.WriteLine(rowsAffected + " row(s) affected");
                 }
             }
-            return GetSpecific(id);
+            return GetOneAlarm(id);
         }
 
         // DELETE: api/ApiWithActions/5

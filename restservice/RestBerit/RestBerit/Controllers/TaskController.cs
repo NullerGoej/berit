@@ -67,8 +67,8 @@ namespace RestBerit.Controllers
         }
 
         // GET: api/Task/id
-        [HttpGet("{id}", Name = "Get")]
-        public Tasks GetSpecific(int id)
+        [HttpGet("{id}", Name = "GetTask")]
+        public Tasks GetOneTask(int id)
         {
             var result = new List<Tasks>();
 
@@ -103,7 +103,7 @@ namespace RestBerit.Controllers
                     }
                 }
             }
-
+             
             return result.Single(x => x.tid.Equals(id));
         }
 
@@ -162,7 +162,7 @@ namespace RestBerit.Controllers
                     Console.WriteLine(rowsAffected + " row(s) affected");
                 }
             }
-            return GetSpecific(id);
+            return GetOneTask(id);
         }
 
         // DELETE: api/ApiWithActions/5

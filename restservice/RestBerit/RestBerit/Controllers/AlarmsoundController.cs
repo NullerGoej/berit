@@ -52,8 +52,8 @@ namespace RestBerit.Controllers
         }
 
         // GET: api/Alarmsound/id
-        [HttpGet("{id}", Name = "Get")]
-        public Alarmsounds GetSpecific(int id)
+        [HttpGet("{id}", Name = "GetAlarmsound")]
+        public Alarmsounds GetOneAlarmsound(int id)
         {
             var result = new List<Alarmsounds>();
 
@@ -133,7 +133,7 @@ namespace RestBerit.Controllers
                     Console.WriteLine(rowsAffected + " row(s) affected");
                 }
             }
-            return GetSpecific(id);
+            return GetOneAlarmsound(id);
         }
 
         // DELETE: api/ApiWithActions/5

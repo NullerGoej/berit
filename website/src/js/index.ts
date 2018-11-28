@@ -29,8 +29,7 @@ ShowCompletedTasksB.addEventListener("click", ShowCompletedTasks);
 
 function AddTask(): void {
     let title: string = (<HTMLInputElement>document.getElementById("taskTitle")).value;
-    let tempUri: string = uri + ""
-    axios.post<Task>(tempUri, {uid: 1, description: title})
+    axios.post<Task>(uri + "task", {uid: 1, description: title})
         .then((response: AxiosResponse) => { Return.innerHTML = "response " + response.status + " " + response.statusText; })
         .catch((error: AxiosError) => { Return.innerHTML = ""+error; });
 }

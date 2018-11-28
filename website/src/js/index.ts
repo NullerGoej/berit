@@ -14,7 +14,7 @@ interface Task {
 
 var loading: string = "<h1>Loading...</h1>";
 
-var uri: string = "https://berit.azurewebsites.net/api/";
+var uri: string = "http://berit.azurewebsites.net/api/";
 
 let Return: HTMLDivElement = <HTMLDivElement>document.getElementById("return");
 
@@ -33,8 +33,7 @@ DeleteTaskB.addEventListener("click", function() { DeleteTask(DeleteTaskInp.valu
 
 function AddTask(): void {
     let title: string = (<HTMLInputElement>document.getElementById("taskTitle")).value;
-    let tempUri: string = uri + "task"
-    axios.post<Task>(tempUri, {uid: 1, description: title})
+    axios.post<Task>(uri + "task", {uid: 1, description: title})
         .then((response: AxiosResponse) => { Return.innerHTML = "response " + response.status + " " + response.statusText; })
         .catch((error: AxiosError) => { Return.innerHTML = ""+error; });
 }

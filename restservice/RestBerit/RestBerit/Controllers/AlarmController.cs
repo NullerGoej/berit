@@ -93,7 +93,7 @@ namespace RestBerit.Controllers
         [HttpPost]
         public void Post([FromBody] Alarms alarm)
         {
-            string insertSql = "INSERT INTO Alarms(aid, uid, timestamp, asid) values (@aid, @uid @timestamp, @asid)";
+            string insertSql = "INSERT INTO Alarms(uid, timestamp, asid) values (@uid @timestamp, @asid)";
 
             using (SqlConnection dbConnection = new SqlConnection(connection))
             {
@@ -101,7 +101,6 @@ namespace RestBerit.Controllers
 
                 using (SqlCommand insertCommand = new SqlCommand(insertSql, dbConnection))
                 {
-                    insertCommand.Parameters.AddWithValue("@aid", alarm.aid);
                     insertCommand.Parameters.AddWithValue("@uid", alarm.uid);
                     insertCommand.Parameters.AddWithValue("@timestamp", alarm.timestamp);
                     insertCommand.Parameters.AddWithValue("@asid", alarm.asid);

@@ -91,7 +91,7 @@ namespace RestBerit.Controllers
         [HttpPost]
         public void Post([FromBody] Alarmsounds alarmsound)
         {
-            string insertSql = "INSERT INTO Alarmsounds(asid, title, soundfile) values (@asid, @title, @soundfile)";
+            string insertSql = "INSERT INTO Alarmsounds(title, soundfile) values (@title, @soundfile)";
 
             using (SqlConnection dbConnection = new SqlConnection(connection))
             {
@@ -99,7 +99,6 @@ namespace RestBerit.Controllers
 
                 using (SqlCommand insertCommand = new SqlCommand(insertSql, dbConnection))
                 {
-                    insertCommand.Parameters.AddWithValue("@asid", alarmsound.asid);
                     insertCommand.Parameters.AddWithValue("@title", alarmsound.title);
                     insertCommand.Parameters.AddWithValue("@soundfile", alarmsound.soundfile);
 

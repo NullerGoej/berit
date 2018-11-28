@@ -97,7 +97,7 @@ namespace RestBerit.Controllers
         [HttpPost]
         public void Post([FromBody] Users user)
         {
-            string insertSql = "INSERT INTO Users(uid, username, password, firstname, lastname, asid) values (@uid, @username, @password, @firstname, @lastname, @asid)";
+            string insertSql = "INSERT INTO Users(username, password, firstname, lastname, asid) values (@username, @password, @firstname, @lastname, @asid)";
 
             using (SqlConnection dbConnection = new SqlConnection(connection))
             {
@@ -105,7 +105,6 @@ namespace RestBerit.Controllers
 
                 using (SqlCommand insertCommand = new SqlCommand(insertSql, dbConnection))
                 {
-                    insertCommand.Parameters.AddWithValue("@uid", user.uid);
                     insertCommand.Parameters.AddWithValue("@username", user.username);
                     insertCommand.Parameters.AddWithValue("@password", user.password);
                     insertCommand.Parameters.AddWithValue("@firstname", user.firstname);
@@ -130,22 +129,34 @@ namespace RestBerit.Controllers
 
                 using (SqlCommand updateCommand = new SqlCommand(updateSql, dbConnection))
                 {
+                    Users tempUser = GetOneUser(id);
+
                     updateCommand.Parameters.AddWithValue("@uid", id);
 
-                    if (user.username != null)
-                    { updateCommand.Parameters.AddWithValue("@username", user.username); }
+                    if (user.username != "")
+                    {
+                        updateCommand.Parameters.AddWithValue("@username", user.username);
+                    }
 
-                    if (user.password != null)
-                    { updateCommand.Parameters.AddWithValue("@password", user.password); }
+                    if (user.password != "")
+                    {
+                        updateCommand.Parameters.AddWithValue("@password", user.password);
+                    }
 
-                    if (user.firstname != null)
-                    { updateCommand.Parameters.AddWithValue("@firstname", user.firstname); }
+                    if (user.firstname != "")
+                    {
+                        updateCommand.Parameters.AddWithValue("@firstname", user.firstname);
+                    }
 
-                    if (user.lastname != null)
-                    { updateCommand.Parameters.AddWithValue("@lastname", user.lastname); }
+                    if (user.lastname != "")
+                    {
+                        updateCommand.Parameters.AddWithValue("@lastname", user.lastname);
+                    }
 
                     if (user.asid != null)
-                    { updateCommand.Parameters.AddWithValue("@asid", user.asid); }
+                    {
+                        updateCommand.Parameters.AddWithValue("@asid", user.asid);
+                    }
 
                     int rowsAffected = updateCommand.ExecuteNonQuery();
                     Console.WriteLine(rowsAffected + " row(s) affected");

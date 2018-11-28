@@ -111,7 +111,7 @@ namespace RestBerit.Controllers
         [HttpPost]
         public void Post([FromBody] Tasks task)
         {
-            string insertSql = "INSERT INTO Tasks(uid, timestamp, description, done) values (@uid, @timestamp, @description, '0')";
+            string insertSql = "INSERT INTO Tasks(uid, timestamp, description, done) values (@uid, @timestamp, @description, 'false')";
 
             using (SqlConnection dbConnection = new SqlConnection(connection))
             {
@@ -120,7 +120,7 @@ namespace RestBerit.Controllers
                 using (SqlCommand insertCommand = new SqlCommand(insertSql, dbConnection))
                 {
                     insertCommand.Parameters.AddWithValue("@uid", task.uid);
-                    insertCommand.Parameters.AddWithValue("@timestamp", task.timestamp);
+                    insertCommand.Parameters.AddWithValue("@timestamp", DateTime.Now);
                     insertCommand.Parameters.AddWithValue("@description", task.description);
 
                     int rowsAffected = insertCommand.ExecuteNonQuery();
@@ -138,8 +138,16 @@ namespace RestBerit.Controllers
             //task.description = Task.description;
             //task.done = Task.done;
             //return GetSpecific(id);
-
-            string updateSql ="UPDATE Tasks SET (endstamp, description, done) values (@endstamp, @description, @done) Where tid = @tid";
+            Tasks tempTask = GetOneTask(id);
+            string updateSql;
+            if (tempTask.endstamp == DateTime.MinValue && task.done)
+            {
+                updateSql = "UPDATE Tasks SET endstamp = @endstamp, description = @description, done = @done WHERE tid = @tid";
+            }
+            else
+            {
+                updateSql = "UPDATE Tasks SET description = @description, done = @done WHERE tid = @tid";
+            }
 
             using (SqlConnection dbConnection = new SqlConnection(connection))
             {
@@ -147,16 +155,24 @@ namespace RestBerit.Controllers
 
                 using (SqlCommand updateCommand = new SqlCommand(updateSql, dbConnection))
                 {
+                    
+
                     updateCommand.Parameters.AddWithValue("@tid", id);
 
-                    if (task.endstamp != null)
-                    { updateCommand.Parameters.AddWithValue("@endstamp", task.endstamp);}
+                    if (tempTask.endstamp == DateTime.MinValue && task.done)
+                    {
+                        updateCommand.Parameters.AddWithValue("@endstamp", DateTime.Now);
+                    }
 
-                    if (task.description !=null)
-                    { updateCommand.Parameters.AddWithValue("@description", task.description);}
-
-                    if (task.done != null)
-                    { updateCommand.Parameters.AddWithValue("@done", task.done);}
+                    if (task.description != "")
+                    {
+                        updateCommand.Parameters.AddWithValue("@description", task.description);
+                    }
+                    else
+                    {
+                        updateCommand.Parameters.AddWithValue("@description", tempTask.description);
+                    }
+                    updateCommand.Parameters.AddWithValue("@done", task.done);
 
                     int rowsAffected = updateCommand.ExecuteNonQuery();
                     Console.WriteLine(rowsAffected + " row(s) affected");

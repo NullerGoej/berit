@@ -12,6 +12,8 @@ interface Task {
     done: boolean;
 }
 
+var loading: string = "<h1>Loading...</h1>";
+
 var uri: string = "https://berit.azurewebsites.net/api/";
 
 let Return: HTMLDivElement = <HTMLDivElement>document.getElementById("return");
@@ -22,6 +24,9 @@ AddTaskB.addEventListener("click", AddTask);
 let ShowTasksB: HTMLButtonElement = <HTMLButtonElement>document.getElementById("showTasks");
 ShowTasksB.addEventListener("click", ShowTasks)
 
+let ShowCompletedTasksB: HTMLButtonElement = <HTMLButtonElement>document.getElementById("showCompletedTasks");
+ShowCompletedTasksB.addEventListener("click", ShowCompletedTasks);
+
 function AddTask(): void {
     let title: string = (<HTMLInputElement>document.getElementById("taskTitle")).value;
     let tempUri: string = uri + ""
@@ -30,7 +35,10 @@ function AddTask(): void {
         .catch((error: AxiosError) => { Return.innerHTML = ""+error; });
 }
 
+// Vagner
+// Showing all tasks, not filtered
 function ShowTasks(): void {
+    Return.innerHTML = loading;
     axios.get<Task[]>(uri + "task")
         .then(function (response: AxiosResponse<Task[]>): void {
             let result: string = "<table><tr>"+
@@ -57,5 +65,39 @@ function ShowTasks(): void {
         .catch(function (error: AxiosError): void {
             Return.innerHTML = ""+error;
         })
-      console.log("Done");
+}
+
+// Vagner 
+// Showing tasks that has been completed
+function ShowCompletedTasks(): void {
+    Return.innerHTML = loading;
+    axios.get<Task[]>(uri + "task")
+    .then(function (response: AxiosResponse<Task[]>): void {
+        let result: string = "<table><tr>"+
+        "<th>Tid</th>"+
+        "<th>Uid</th>"+
+        "<th>Timestamp</th>"+
+        "<th>Endstamp</th>"+
+        "<th>Description</th>"+
+        "<th>Done</th>"+
+        "</tr>";
+
+        response.data.forEach((task: Task) => {
+            if (task.done)
+            {
+                result += "<tr><td>" + task.tid + "</td>"
+                + "<td>" + task.uid + "</td>"
+                + "<td>" + task.timestamp + "</td>"
+                + "<td>" + task.endstamp + "</td>"
+                + "<td>" + task.description + "</td>"
+                + "<td>" + task.done + "</td></tr>";
+            }            
+        })
+        result += "</table>";
+
+        Return.innerHTML = result;
+    })
+    .catch(function (error: AxiosError): void {
+        Return.innerHTML = ""+error;
+    })
 }

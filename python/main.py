@@ -13,9 +13,7 @@ r = requests.get(send_url)
 j = json.loads(r.text)
 lat = j['latitude']
 lon = j['longitude']
-
-print(lat)
-print(lon)
+city = j['city']
 
 from weather import Weather, Unit
 
@@ -23,13 +21,7 @@ weather = Weather(unit=Unit.CELSIUS)
 
 lookup = weather.lookup_by_latlng(lat,lon)
 condition = lookup.condition
-
 temp = condition.temp
-print(temp)
-m = "Current temp: "
-m += str(temp)
-m += " C"
-print(m)
 
 #forecasts = lookup.forecast
 #for forecast in forecasts:
@@ -63,7 +55,8 @@ sense.show_message("Welcome to Berit", text_colour=(255,255,255), back_colour=(0
 
 
 while True:
-  
+
+  ## Temp from pi
   temp1 = sense.get_temperature_from_humidity()
   temp2 = sense.get_temperature_from_pressure()
   temp_cpu = get_cpu_temperature()
@@ -74,15 +67,19 @@ while True:
   temp = (temp1+temp2)/2
   temp_corr = temp - ((temp_cpu-temp)/1.5)
   temp_corr = get_smooth(temp_corr)
+  ## --------------
 
-  msg = str(round(temp_corr,2))  
+  msg = "Current temp in "
+  msg += city
+  msg += ": "
+  msg += str(temp)  
   msg += " C"
 
 
   for event in sense.stick.get_events():
       if (event.action == "pressed"):
           sense.show_message(msg, text_colour=(255,255,255), back_colour=(0,0,0), scroll_speed=0.08)
-          print("Current temp: ", condition.temp)
+          print(msg)
 
         #if (event.direction == "right"):
         #  px = px + 1

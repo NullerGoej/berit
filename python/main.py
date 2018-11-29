@@ -5,16 +5,17 @@ import os
 
 sense = SenseHat()
 
-from pigps import GPS
-from time import sleep
-gps = GPS()
+import requests
+import json
 
-lat = gps.lat
-lon = gps.lon
+send_url = 'http://freegeoip.net/json'
+r = requests.get(send_url)
+j = json.loads(r.text)
+lat = j['latitude']
+lon = j['longitude']
 
 print(lat)
 print(lon)
-print(gps.time)
 
 from weather import Weather, Unit
 

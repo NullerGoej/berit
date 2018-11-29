@@ -5,13 +5,22 @@ import os
 
 sense = SenseHat()
 
+from pigps import GPS
+from time import sleep
+gps = GPS()
 
+lat = gps.lat
+lon = gps.lon
+
+print(lat)
+print(lon)
+print(gps.time)
 
 from weather import Weather, Unit
 
 weather = Weather(unit=Unit.CELSIUS)
 
-lookup = weather.lookup(560743)
+lookup = weather.lookup_by_latlng(lat,lon)
 condition = lookup.condition
 
 temp = condition.temp

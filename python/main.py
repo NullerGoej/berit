@@ -24,6 +24,7 @@ def get_smooth(x):
 
 
 print("Started")
+sense.show_message("Welcome to Berit", text_colour=(255,255,255), back_colour=(0,0,0), scroll_speed=0.08)
 
 
 while True:
@@ -45,7 +46,7 @@ while True:
 
   for event in sense.stick.get_events():
       if (event.action == "pressed"):
-          sense.show_message("Hello", text_colour=(255,255,255), back_colour=(0,0,0), scroll_speed=0.08)
+          sense.show_message(msg, text_colour=(255,255,255), back_colour=(0,0,0), scroll_speed=0.08)
 
         #if (event.direction == "right"):
         #  px = px + 1

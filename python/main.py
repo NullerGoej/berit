@@ -14,14 +14,14 @@ weather = Weather(unit=Unit.CELSIUS)
 lookup = weather.lookup(560743)
 condition = lookup.condition
 
-print(condition.text)
+print("Current temp: ", condition.temp)
 
-forecasts = lookup.forecast
-for forecast in forecasts:
-    print(forecast.text)
-    print(forecast.date)
-    print(forecast.high)
-    print(forecast.low)
+#forecasts = lookup.forecast
+#for forecast in forecasts:
+#    print(forecast.text)
+#    print(forecast.date)
+#    print(forecast.high)
+#    print(forecast.low)
 
 
 

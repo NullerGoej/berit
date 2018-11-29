@@ -42,10 +42,21 @@ namespace RestBerit.Controllers
                             //SQL data reader + reading data
                             while (reader.Read())
                             {
-                                int aid = reader.GetInt32(0);
-                                int uid = reader.GetInt32(1);
-                                DateTime timestamp = reader.GetDateTime(2);
-                                int asid = reader.GetInt32(3);
+                                int aid = 0;
+                                if(!reader.IsDBNull(0))
+                                    aid = reader.GetInt32(0);
+
+                                int uid = 0;
+                                if(!reader.IsDBNull(1))
+                                    uid = reader.GetInt32(1);
+
+                                DateTime timestamp = DateTime.MinValue;
+                                if (!reader.IsDBNull(2))
+                                    timestamp = reader.GetDateTime(2);
+
+                                int asid = 0;
+                                if(!reader.IsDBNull(3))
+                                    asid = reader.GetInt32(3);
 
                                 var bAlarms = new Alarms(aid, uid, timestamp, asid);
 
@@ -79,10 +90,21 @@ namespace RestBerit.Controllers
                         {
                             while (reader.Read())
                             {
-                                int aid = reader.GetInt32(0);
-                                int uid = reader.GetInt32(1);
-                                DateTime timestamp = reader.GetDateTime(2);
-                                int asid = reader.GetInt32(3);
+                                int aid = 0;
+                                if (!reader.IsDBNull(0))
+                                    aid = reader.GetInt32(0);
+
+                                int uid = 0;
+                                if (!reader.IsDBNull(1))
+                                    uid = reader.GetInt32(1);
+
+                                DateTime timestamp = DateTime.MinValue;
+                                if (!reader.IsDBNull(2))
+                                    timestamp = reader.GetDateTime(2);
+
+                                int asid = 0;
+                                if (!reader.IsDBNull(3))
+                                    asid = reader.GetInt32(3); ;
 
 
                                 var bAlarms = new Alarms(aid, uid, timestamp, asid);
@@ -144,15 +166,28 @@ namespace RestBerit.Controllers
                     {
                         updateCommand.Parameters.AddWithValue("@uid", alarm.uid);
                     }
+                    else
+                    {
+                        updateCommand.Parameters.AddWithValue("@uid", tempAlarm.uid);
+                    }
+
 
                     if (tempAlarm.timestamp != alarm.timestamp)
                     {
                         updateCommand.Parameters.AddWithValue("@timestamp", alarm.timestamp);
                     }
+                    else
+                    {
+                        updateCommand.Parameters.AddWithValue("@timestamp", tempAlarm.timestamp);
+                    }
 
                     if (tempAlarm.asid != alarm.asid)
                     {
                         updateCommand.Parameters.AddWithValue("@asid", alarm.asid);
+                    }
+                    else
+                    {
+                        updateCommand.Parameters.AddWithValue("@asid", tempAlarm.asid);
                     }
 
 

@@ -42,16 +42,29 @@ namespace RestBerit.Controllers
                             //SQL data reader + reading data
                             while (reader.Read())
                             {
-                                int tid = reader.GetInt32(0);
-                                int uid = reader.GetInt32(1);
-                                DateTime timestamp = reader.GetDateTime(2);
+                                int tid = 0;
+                                if(!reader.IsDBNull(0))
+                                    tid = reader.GetInt32(0);
+
+                                int uid = 0;
+                                if(!reader.IsDBNull(1))
+                                    uid = reader.GetInt32(1);
+
+                                DateTime timestamp = DateTime.MinValue;
+                                if(!reader.IsDBNull(2))
+                                    timestamp = reader.GetDateTime(2);
 
                                 DateTime endstamp = DateTime.MinValue;
                                 if (!reader.IsDBNull(3))
                                     endstamp = reader.GetDateTime(3);
 
-                                string description = reader.GetString(4);
-                                bool done = reader.GetBoolean(5);
+                                string description = "";
+                                if(!reader.IsDBNull(4))
+                                    description = reader.GetString(4);
+
+                                bool done = false; 
+                                if(!reader.IsDBNull(5))
+                                    done = reader.GetBoolean(5);
 
 
                                 var bTasks = new Tasks(tid, uid, timestamp, endstamp, description, done);
@@ -86,14 +99,29 @@ namespace RestBerit.Controllers
                         {
                             while (reader.Read())
                             {
-                                int tid = reader.GetInt32(0);
-                                int uid = reader.GetInt32(1);
-                                DateTime timestamp = reader.GetDateTime(2);
+                                int tid = 0;
+                                if (!reader.IsDBNull(0))
+                                    tid = reader.GetInt32(0);
+
+                                int uid = 0;
+                                if (!reader.IsDBNull(1))
+                                    uid = reader.GetInt32(1);
+
+                                DateTime timestamp = DateTime.MinValue;
+                                if (!reader.IsDBNull(2))
+                                    timestamp = reader.GetDateTime(2);
+
                                 DateTime endstamp = DateTime.MinValue;
                                 if (!reader.IsDBNull(3))
                                     endstamp = reader.GetDateTime(3);
-                                string description = reader.GetString(4);
-                                bool done = reader.GetBoolean(5);
+
+                                string description = "";
+                                if (!reader.IsDBNull(4))
+                                    description = reader.GetString(4);
+
+                                bool done = false;
+                                if (!reader.IsDBNull(5))
+                                    done = reader.GetBoolean(5);
 
                                 var bTasks = new Tasks(tid, uid, timestamp, endstamp, description, done);
 
@@ -103,7 +131,7 @@ namespace RestBerit.Controllers
                     }
                 }
             }
-             
+
             return result.Single(x => x.tid.Equals(id));
         }
 
@@ -133,11 +161,6 @@ namespace RestBerit.Controllers
         [HttpPut("{id}")]
         public Tasks Put(int id, [FromBody] Tasks task)
         {
-            //Tasks Task = GetSpecific(id);
-            //task.endstamp = Task.endstamp;
-            //task.description = Task.description;
-            //task.done = Task.done;
-            //return GetSpecific(id);
             Tasks tempTask = GetOneTask(id);
             string updateSql;
             if (tempTask.endstamp == DateTime.MinValue && task.done)

@@ -43,12 +43,29 @@ namespace RestBerit.Controllers
                             while (reader.Read())
                             {
 
-                                int uid = reader.GetInt32(0);
-                                string username = reader.GetString(1);
-                                string password = reader.GetString(2);
-                                string firstname = reader.GetString(3);
-                                string lastname = reader.GetString(4);
-                                int asid = reader.GetInt32(5);
+                                int uid = 0;
+                                if (!reader.IsDBNull(0))
+                                    uid = reader.GetInt32(0);
+
+                                string username = "";
+                                if(!reader.IsDBNull(1))
+                                    username = reader.GetString(1);
+
+                                string password = ""; 
+                                if(!reader.IsDBNull(2))
+                                    password = reader.GetString(2);
+
+                                string firstname = "";
+                                if (!reader.IsDBNull(3))
+                                    firstname = reader.GetString(3);
+
+                                string lastname = "";
+                                if (!reader.IsDBNull(4))
+                                    firstname = reader.GetString(4);
+
+                                int asid = 0;
+                                if (!reader.IsDBNull(5))
+                                    asid = reader.GetInt32(5);
 
                                 var bUsers = new Users(uid, username, password, firstname, lastname, asid);
 
@@ -82,12 +99,29 @@ namespace RestBerit.Controllers
                         {
                             while (reader.Read())
                             {
-                                int uid = reader.GetInt32(0);
-                                string username = reader.GetString(1);
-                                string password = reader.GetString(2);
-                                string firstname = reader.GetString(3);
-                                string lastname = reader.GetString(4);
-                                int asid = reader.GetInt32(5);
+                                int uid = 0;
+                                if (!reader.IsDBNull(0))
+                                    uid = reader.GetInt32(0);
+
+                                string username = "";
+                                if (!reader.IsDBNull(1))
+                                    username = reader.GetString(1);
+
+                                string password = "";
+                                if (!reader.IsDBNull(2))
+                                    password = reader.GetString(2);
+
+                                string firstname = "";
+                                if (!reader.IsDBNull(3))
+                                    firstname = reader.GetString(3);
+
+                                string lastname = "";
+                                if (!reader.IsDBNull(4))
+                                    firstname = reader.GetString(4);
+
+                                int asid = 0;
+                                if (!reader.IsDBNull(5))
+                                    asid = reader.GetInt32(5);
 
                                 var bUsers = new Users(uid, username, password, firstname, lastname, asid);
 
@@ -144,25 +178,45 @@ namespace RestBerit.Controllers
                     {
                         updateCommand.Parameters.AddWithValue("@username", user.username);
                     }
+                    else
+                    {
+                        updateCommand.Parameters.AddWithValue("@username", tempUser.username);
+                    }
 
                     if (user.password != "")
                     {
                         updateCommand.Parameters.AddWithValue("@password", user.password);
+                    }
+                    else
+                    {
+                        updateCommand.Parameters.AddWithValue("@password", tempUser.password);
                     }
 
                     if (user.firstname != "")
                     {
                         updateCommand.Parameters.AddWithValue("@firstname", user.firstname);
                     }
+                    else
+                    {
+                        updateCommand.Parameters.AddWithValue("@firstname", tempUser.firstname);
+                    }
 
                     if (user.lastname != "")
                     {
                         updateCommand.Parameters.AddWithValue("@lastname", user.lastname);
                     }
+                    else
+                    {
+                        updateCommand.Parameters.AddWithValue("@lastname", tempUser.lastname);
+                    }
 
                     if (user.asid != tempUser.asid)
                     {
                         updateCommand.Parameters.AddWithValue("@asid", user.asid);
+                    }
+                    else
+                    {
+                        updateCommand.Parameters.AddWithValue("@asid", tempUser.asid);
                     }
 
                     int rowsAffected = updateCommand.ExecuteNonQuery();

@@ -35,9 +35,17 @@ namespace RestBerit.Controllers
                         {
                             while (reader.Read())
                             {
-                                int asid = reader.GetInt32(0);
-                                string title = reader.GetString(1);
-                                string soundfile = reader.GetString(2);
+                                int asid = 0; 
+                                if(!reader.IsDBNull(0))
+                                    asid = reader.GetInt32(0);
+
+                                string title = "";
+                                if(!reader.IsDBNull(1))
+                                    title = reader.GetString(1);
+
+                                string soundfile = "";
+                                if(!reader.IsDBNull(2))
+                                    soundfile = reader.GetString(2);
 
                                 var bAlarmsounds = new Alarmsounds(asid,title, soundfile);
 
@@ -71,9 +79,17 @@ namespace RestBerit.Controllers
                         {
                             while (reader.Read())
                             {
-                                int asid = reader.GetInt32(0);
-                                string title = reader.GetString(1);
-                                string soundfile = reader.GetString(2);
+                                int asid = 0;
+                                if (!reader.IsDBNull(0))
+                                    asid = reader.GetInt32(0);
+
+                                string title = "";
+                                if (!reader.IsDBNull(1))
+                                    title = reader.GetString(1);
+
+                                string soundfile = "";
+                                if (!reader.IsDBNull(2))
+                                    soundfile = reader.GetString(2);
 
                                 var bAlarmsounds = new Alarmsounds(asid, title, soundfile);
 
@@ -112,6 +128,7 @@ namespace RestBerit.Controllers
         [HttpPut("{id}")]
         public Alarmsounds Put(int id, [FromBody] Alarmsounds alarmsound)
         {
+            Alarmsounds tempAkarAlarmsound = GetOneAlarmsound(id);
             string updateSql = "UPDATE Alarmsounds SET title = @title, soundfile = @soundfile WHERE asid = @asid";
 
             using (SqlConnection dbConnection = new SqlConnection(connection))
@@ -123,10 +140,23 @@ namespace RestBerit.Controllers
                     updateCommand.Parameters.AddWithValue("@asid", id);
 
                     if (alarmsound.title != "")
-                    { updateCommand.Parameters.AddWithValue("@title", alarmsound.title); }
+                    {
+                        updateCommand.Parameters.AddWithValue("@title", alarmsound.title);
+                    }
+                    else
+                    {
+                        updateCommand.Parameters.AddWithValue("@title", tempAkarAlarmsound.title);
+                    }
+
 
                     if (alarmsound.soundfile != "")
-                    { updateCommand.Parameters.AddWithValue("@soundfile", alarmsound.soundfile); }
+                    {
+                        updateCommand.Parameters.AddWithValue("@soundfile", alarmsound.soundfile);
+                    }
+                    else
+                    {
+                        updateCommand.Parameters.AddWithValue("@soundfile", tempAkarAlarmsound.soundfile);
+                    }
 
                     int rowsAffected = updateCommand.ExecuteNonQuery();
                     Console.WriteLine(rowsAffected + " row(s) affected");

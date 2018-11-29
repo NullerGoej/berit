@@ -56,19 +56,6 @@ sense.show_message("Welcome to Berit", text_colour=(255,255,255), back_colour=(0
 
 while True:
 
-  ## Temp from pi
-  pi_temp1 = sense.get_temperature_from_humidity()
-  pi_temp2 = sense.get_temperature_from_pressure()
-  pi_temp_cpu = get_cpu_temperature()
-
-  pi_humidity = sense.get_humidity()
-  pi_pressure = sense.get_pressure()
-
-  pi_temp = (pi_temp1+pi_temp2)/2
-  pi_temp_corr = pi_temp - ((pi_temp_cpu-temp)/1.5)
-  pi_temp_corr = get_smooth(pi_temp_corr)
-  ## --------------
-
   msg = "Current temp in "
   msg += city
   msg += ": "

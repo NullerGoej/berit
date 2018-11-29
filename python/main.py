@@ -71,7 +71,6 @@ while True:
   for event in sense.stick.get_events():
       if (event.action == "pressed"):
           sense.show_message(msg, text_colour=(255,255,255), back_colour=(0,0,0), scroll_speed=0.08)
-          global condition
           print("Current temp: ", condition.temp)
 
         #if (event.direction == "right"):

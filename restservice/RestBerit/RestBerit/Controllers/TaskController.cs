@@ -66,8 +66,11 @@ namespace RestBerit.Controllers
                                 if(!reader.IsDBNull(5))
                                     done = reader.GetBoolean(5);
 
+                                bool repeat = false;
+                                if (!reader.IsDBNull(6))
+                                    repeat = reader.GetBoolean(6);
 
-                                var bTasks = new Tasks(tid, uid, timestamp, endstamp, description, done);
+                                var bTasks = new Tasks(tid, uid, timestamp, endstamp, description, done, repeat);
 
                                 result.Add(bTasks);
                             }
@@ -123,7 +126,11 @@ namespace RestBerit.Controllers
                                 if (!reader.IsDBNull(5))
                                     done = reader.GetBoolean(5);
 
-                                var bTasks = new Tasks(tid, uid, timestamp, endstamp, description, done);
+                                bool repeat = false;
+                                if (!reader.IsDBNull(6))
+                                    repeat = reader.GetBoolean(6);
+
+                                var bTasks = new Tasks(tid, uid, timestamp, endstamp, description, done, repeat);
 
                                 result.Add(bTasks);
                             }
@@ -139,7 +146,7 @@ namespace RestBerit.Controllers
         [HttpPost]
         public void Post([FromBody] Tasks task)
         {
-            string insertSql = "INSERT INTO Tasks(uid, timestamp, description, done) values (@uid, @timestamp, @description, 'false')";
+            string insertSql = "INSERT INTO Tasks(uid, timestamp, description, done, repeat) values (@uid, @timestamp, @description, 'false', @repeat)";
 
             using (SqlConnection dbConnection = new SqlConnection(connection))
             {
@@ -150,6 +157,7 @@ namespace RestBerit.Controllers
                     insertCommand.Parameters.AddWithValue("@uid", task.uid);
                     insertCommand.Parameters.AddWithValue("@timestamp", DateTime.Now);
                     insertCommand.Parameters.AddWithValue("@description", task.description);
+                    insertCommand.Parameters.AddWithValue("@repeat", task.repeat);
 
                     int rowsAffected = insertCommand.ExecuteNonQuery();
                     Console.WriteLine(rowsAffected + " row(s) affected");
@@ -165,11 +173,11 @@ namespace RestBerit.Controllers
             string updateSql;
             if (tempTask.endstamp == DateTime.MinValue && task.done)
             {
-                updateSql = "UPDATE Tasks SET endstamp = @endstamp, description = @description, done = @done WHERE tid = @tid";
+                updateSql = "UPDATE Tasks SET endstamp = @endstamp, description = @description, done = @done, repeat = @repeat WHERE tid = @tid";
             }
             else
             {
-                updateSql = "UPDATE Tasks SET description = @description, done = @done WHERE tid = @tid";
+                updateSql = "UPDATE Tasks SET description = @description, done = @done, repeat = @repeat WHERE tid = @tid";
             }
 
             using (SqlConnection dbConnection = new SqlConnection(connection))
@@ -196,6 +204,8 @@ namespace RestBerit.Controllers
                         updateCommand.Parameters.AddWithValue("@description", tempTask.description);
                     }
                     updateCommand.Parameters.AddWithValue("@done", task.done);
+
+                    updateCommand.Parameters.AddWithValue("@repeat", task.repeat);
 
                     int rowsAffected = updateCommand.ExecuteNonQuery();
                     Console.WriteLine(rowsAffected + " row(s) affected");

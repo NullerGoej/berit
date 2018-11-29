@@ -12297,11 +12297,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Sander\\Desktop\\Project Berit\\berit\\restservice\\RestBerit\\RestBerit\\RestBerit.csproj",
+      "projectUniqueName": "C:\\Users\\Sander\\Desktop\\BackItUpBerit\\berit\\restservice\\RestBerit\\RestBerit\\RestBerit.csproj",
       "projectName": "RestBerit",
-      "projectPath": "C:\\Users\\Sander\\Desktop\\Project Berit\\berit\\restservice\\RestBerit\\RestBerit\\RestBerit.csproj",
+      "projectPath": "C:\\Users\\Sander\\Desktop\\BackItUpBerit\\berit\\restservice\\RestBerit\\RestBerit\\RestBerit.csproj",
       "packagesPath": "C:\\Users\\Sander\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Sander\\Desktop\\Project Berit\\berit\\restservice\\RestBerit\\RestBerit\\obj\\",
+      "outputPath": "C:\\Users\\Sander\\Desktop\\BackItUpBerit\\berit\\restservice\\RestBerit\\RestBerit\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

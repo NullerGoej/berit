@@ -19,53 +19,28 @@ from weather import Weather, Unit
 
 weather = Weather(unit=Unit.CELSIUS)
 
-lookup = weather.lookup_by_latlng(lat,lon)
-condition = lookup.condition
-temp = condition.temp
-
-#forecasts = lookup.forecast
-#for forecast in forecasts:
-#    print(forecast.text)
-#    print(forecast.date)
-#    print(forecast.high)
-#    print(forecast.low)
-
-
-
-# Get CPU temperature
-def get_cpu_temperature():
-    res = os.popen("vcgencmd measure_temp").readline()
-    t = float(res.replace("temp=","").replace("'C\n",""))
-    return t
-
-# Smooth
-def get_smooth(x):
-    if not hasattr(get_smooth, "t"):
-        get_smooth.t = [x,x,x]
-    get_smooth.t[2] = get_smooth.t[1]
-    get_smooth.t[1] = get_smooth.t[0]
-    get_smooth.t[0] = x
-    xs = (get_smooth.t[0]+get_smooth.t[1]+get_smooth.t[2])/3
-    return xs
-
-
-
 print("Started")
 sense.show_message("Welcome to Berit", text_colour=(255,255,255), back_colour=(0,0,0), scroll_speed=0.08)
 
-
 while True:
 
-  msg = "Current temp in "
-  msg += city
-  msg += ": "
-  msg += str(temp)  
-  msg += " C"
+  
 
 
   for event in sense.stick.get_events():
       if (event.action == "pressed"):
-          sense.show_message(msg, text_colour=(255,255,255), back_colour=(0,0,0), scroll_speed=0.1)
+
+          lookup = weather.lookup_by_latlng(lat,lon)
+          condition = lookup.condition
+          temp = condition.temp
+
+          msg = "Current temp in "
+          msg += city
+          msg += ": "
+          msg += str(temp)  
+          msg += " C"
+
+          sense.show_message(msg, text_colour=(255,255,255), back_colour=(0,0,0), scroll_speed=0.05)
           print(msg)
 
         #if (event.direction == "right"):

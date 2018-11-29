@@ -39,7 +39,8 @@ while True:
   temp_corr = temp - ((temp_cpu-temp)/1.5)
   temp_corr = get_smooth(temp_corr)
 
-  msg = temp_corr , " C"
+  msg = str(round(temp_corr,2))  
+  msg += " C"
 
 
   for event in sense.stick.get_events():

@@ -1,8 +1,9 @@
-# kunne se vejret på mit device ved at trykke på en knap
+from sense_hat import SenseHat
+from random import randint
+import time
+import os
 
-
-
-
+sense = SenseHat()
 
 
 

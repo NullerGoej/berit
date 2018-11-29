@@ -16,6 +16,13 @@ condition = lookup.condition
 
 print(condition.text)
 
+forecasts = lookup.forecast
+for forecast in forecasts:
+    print(forecast.text)
+    print(forecast.date)
+    print(forecast.high)
+    print(forecast.low)
+
 
 
 # Get CPU temperature

@@ -64,9 +64,9 @@ while True:
   pi_humidity = sense.get_humidity()
   pi_pressure = sense.get_pressure()
 
-  pi_temp = (temp1+temp2)/2
-  pi_temp_corr = temp - ((temp_cpu-temp)/1.5)
-  pi_temp_corr = get_smooth(temp_corr)
+  pi_temp = (pi_temp1+pi_temp2)/2
+  pi_temp_corr = pi_temp - ((pi_temp_cpu-temp)/1.5)
+  pi_temp_corr = get_smooth(pi_temp_corr)
   ## --------------
 
   msg = "Current temp in "

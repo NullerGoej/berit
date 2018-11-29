@@ -17,8 +17,8 @@ condition = lookup.condition
 temp = condition.temp
 print(temp)
 m = "Current temp: "
-m += str(round(temp,2))
-print("Current temp: ", condition.temp)
+m += temp
+print("Current temp: ", temp , " C")
 
 #forecasts = lookup.forecast
 #for forecast in forecasts:

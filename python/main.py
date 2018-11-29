@@ -8,7 +8,7 @@ sense = SenseHat()
 import requests
 import json
 
-send_url = 'http://freegeoip.net/json'
+send_url = 'http://api.ipstack.com/87.59.144.208?access_key=61dc2795b08ce4aeb90d1dab18f1c582'
 r = requests.get(send_url)
 j = json.loads(r.text)
 lat = j['latitude']

@@ -41,32 +41,43 @@ function AddTask(): void {
 // Vagner
 // Showing all tasks, not filtered
 function ShowTasks(): void {
+
     Return.innerHTML = loading;
     axios.get<Task[]>(uri + "task")
         .then(function (response: AxiosResponse<Task[]>): void {
-            let result: string = "<table><tr>"+
+            let result: HTMLDivElement = <HTMLDivElement>document.createElement("DIV");
+            let res = result.innerHTML;
+            res += "<table id='tasksTbl'><tr>"+
             "<th>Tid</th>"+
-            "<th>Uid</th>"+
-            "<th>Timestamp</th>"+
-            "<th>Endstamp</th>"+
             "<th>Description</th>"+
-            "<th>Done</th>"+
+            "<th>Check</th>"+
             "</tr>";
+            Return.innerHTML = result.innerHTML;
 
+            
             response.data.forEach((task: Task) => {
-                result += "<tr><td>" + task.tid + "</td>"
-                + "<td>" + task.uid + "</td>"
-                + "<td>" + task.timestamp + "</td>"
-                + "<td>" + task.endstamp + "</td>"
+                res += "<tr id='task" + task.tid + "'><td>" + task.tid + "</td>"
                 + "<td>" + task.description + "</td>"
-                + "<td>" + task.done + "</td></tr>"
+                + "<td><button id='" + task.tid + "' class='completeBtn'>Complete</button></td></tr>";
             })
-            result += "</table>";
+            res += "</table>";
 
-            Return.innerHTML = result;
+            Return.innerHTML = res;
+
+            var btns = document.getElementsByClassName('completeBtn');
+            for (var i = 0; i < btns.length; i++)
+            {
+                (function() {
+                    var btn = btns[i];
+                    var id = btn.id;
+                    btn.addEventListener("click", function() { CompleteTask(id); });
+                }());                
+            }
+
+            //Return.innerHTML = res;
         })
         .catch(function (error: AxiosError): void {
-            Return.innerHTML = ""+error;
+            Return.innerHTML = "" + error;
         })
 }
 
@@ -111,4 +122,21 @@ function DeleteTask(tid: string): void {
     axios.delete(uri + "task/" + tid)
         .then((response: AxiosResponse) => { Return.innerHTML = "response " + response.status + " " + response.statusText; })
         .catch((error: AxiosError) => { Return.innerHTML = ""+error; });
+}
+
+
+// Vagner
+// Updates a task to be completed at current timestamp, then shows the Completed Tasks table
+function CompleteTask(taskid: string): void
+{
+    axios.get<Task>(uri + "task/" + taskid)
+        .then(function (response: AxiosResponse<Task>): void {
+            let task = response.data;
+            axios.put(uri + 'task/' + taskid, {description:task.description, done:true})
+                .then((response) => { Return.innerHTML = "response " + response.status + " " + response.statusText; ShowCompletedTasks(); }) 
+                .catch(function(error) {console.log(error); })
+        })
+        .catch(function (error: AxiosError): void {
+            Return.innerHTML = ""+error;
+        })
 }

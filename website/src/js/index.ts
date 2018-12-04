@@ -56,9 +56,12 @@ function ShowTasks(): void {
 
             
             response.data.forEach((task: Task) => {
-                res += "<tr id='task" + task.tid + "'><td>" + task.tid + "</td>"
-                + "<td>" + task.description + "</td>"
-                + "<td><button id='" + task.tid + "' class='completeBtn'>Complete</button></td></tr>";
+                if (!task.done)
+                {
+                    res += "<tr id='task" + task.tid + "'><td>" + task.tid + "</td>"
+                    + "<td>" + task.description + "</td>"
+                    + "<td><button id='" + task.tid + "' class='completeBtn'>Complete</button></td></tr>";
+                }
             })
             res += "</table>";
 

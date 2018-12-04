@@ -12,6 +12,13 @@ interface Task {
     done: boolean;
 }
 
+interface Alarm {
+    aid: number;
+    uid: number;
+    timestamp: Date;
+    asid: number;
+}
+
 var loading: string = "<h1>Loading...</h1>";
 
 var uri: string = "https://berit.azurewebsites.net/api/";
@@ -30,6 +37,15 @@ ShowCompletedTasksB.addEventListener("click", ShowCompletedTasks);
 let DeleteTaskInp: HTMLInputElement = <HTMLInputElement>document.getElementById("taskIdInp");
 let DeleteTaskB: HTMLButtonElement = <HTMLButtonElement>document.getElementById("deleteTask");
 DeleteTaskB.addEventListener("click", function() { DeleteTask(DeleteTaskInp.value); });
+
+let NewAlarmDateInp: HTMLInputElement = <HTMLInputElement>document.getElementById("newAlarmDateInp");
+let NewAlarmToneInp: HTMLInputElement = <HTMLInputElement>document.getElementById("newAlarmToneInp");  
+let NewAlarmBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("newAlarmBtn");
+NewAlarmBtn.addEventListener("click", CreateAlarm);
+
+
+
+// Functions
 
 function AddTask(): void {
     let title: string = (<HTMLInputElement>document.getElementById("taskTitle")).value;
@@ -143,3 +159,21 @@ function CompleteTask(taskid: string): void
             Return.innerHTML = ""+error;
         })
 }
+
+
+// Vagner
+// Create new Alarm
+function CreateAlarm()
+{
+    let date = NewAlarmDateInp.value;
+    let tone = NewAlarmToneInp.value;
+    axios.post<Alarm>(uri + "alarm", {uid: 1, timestamp: date, asid: tone})
+        .then((response: AxiosResponse) => { Return.innerHTML = "response " + response.status + " " + response.statusText; })
+        .catch((error: AxiosError) => { Return.innerHTML = ""+error; });
+}
+
+
+
+
+
+

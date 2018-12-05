@@ -18,6 +18,8 @@ lon = j['longitude']
 city = j['city']
 
 # importing the weather functions
+# Weather api from yahoo
+# https://developer.yahoo.com/weather/
 from weather import Weather, Unit
 
 # Setting the weather unit
@@ -39,12 +41,15 @@ while True:
           lookup = weather.lookup_by_latlng(lat,lon)
           condition = lookup.condition
           temp = condition.temp
+          forecast = condition.text
 
-          msg = "Current temp in "
-          msg += city
+          msg = "Temperature"
           msg += ": "
           msg += str(temp)  
           msg += " C"
+          msg += " - Forecast"
+          msg += ": "
+          msg += str(forecast)
 
           print(msg)
           sense.show_message(msg, text_colour=(255,255,255), back_colour=(0,0,0), scroll_speed=0.05)

@@ -21,7 +21,7 @@ city = j['city']
 # Weather api from yahoo
 # https://pypi.org/project/weather-api/
 # https://developer.yahoo.com/weather/
-from weather-api import Weather, Unit
+from weather import Weather, Unit
 
 # Setting the weather unit
 weather = Weather(unit=Unit.CELSIUS)

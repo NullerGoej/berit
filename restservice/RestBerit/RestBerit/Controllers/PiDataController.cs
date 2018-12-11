@@ -107,7 +107,7 @@ namespace RestBerit.Controllers
         [HttpPost]
         public void Post([FromBody] PiData pie)
         {
-            string insertSql = "INSERT INTO PiData(pid, timestamp, temperatur) values (@pid, @timestamp, @temperatur)";
+            string insertSql = "INSERT INTO PiData( timestamp, temperatur) values (@timestamp, @temperatur)";
 
             using (SqlConnection dbConnection = new SqlConnection(connection))
             {
@@ -115,7 +115,6 @@ namespace RestBerit.Controllers
 
                 using (SqlCommand insertCommand = new SqlCommand(insertSql, dbConnection))
                 {
-                    insertCommand.Parameters.AddWithValue("@pid", pie.pid);
                     insertCommand.Parameters.AddWithValue("@timestamp", DateTime.Now);
                     insertCommand.Parameters.AddWithValue("@temperatur", pie.temperatur);
 

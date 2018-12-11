@@ -132,7 +132,7 @@ namespace RestBerit.Controllers
                 using (SqlCommand insertCommand = new SqlCommand(insertSql, dbConnection))
                 {
                     insertCommand.Parameters.AddWithValue("@uid", alarm.uid);
-                    insertCommand.Parameters.AddWithValue("@timestamp", DateTime.Now);
+                    insertCommand.Parameters.AddWithValue("@timestamp", alarm.timestamp);
                     insertCommand.Parameters.AddWithValue("@asid", alarm.asid);
 
                     int rowsAffected = insertCommand.ExecuteNonQuery();
@@ -148,7 +148,7 @@ namespace RestBerit.Controllers
             Alarms tempAlarm = GetOneAlarm(id);
             string updateSql;
 
-            updateSql = "UPDATE Alarms SET uid = @uid, timestamp = @timestamp, asid = @asid WHERE aid = @aid";
+            updateSql = "UPDATE Alarms SET timestamp = @timestamp, asid = @asid WHERE aid = @aid";
             
 
 
@@ -162,17 +162,8 @@ namespace RestBerit.Controllers
 
                     updateCommand.Parameters.AddWithValue("@aid", id);
 
-                    if (tempAlarm.uid != alarm.uid)
-                    {
-                        updateCommand.Parameters.AddWithValue("@uid", alarm.uid);
-                    }
-                    else
-                    {
-                        updateCommand.Parameters.AddWithValue("@uid", tempAlarm.uid);
-                    }
 
-
-                    if (tempAlarm.timestamp != alarm.timestamp)
+                    if (alarm.timestamp != tempAlarm.timestamp)
                     {
                         updateCommand.Parameters.AddWithValue("@timestamp", alarm.timestamp);
                     }
@@ -180,7 +171,6 @@ namespace RestBerit.Controllers
                     {
                         updateCommand.Parameters.AddWithValue("@timestamp", tempAlarm.timestamp);
                     }
-
                     if (tempAlarm.asid != alarm.asid)
                     {
                         updateCommand.Parameters.AddWithValue("@asid", alarm.asid);

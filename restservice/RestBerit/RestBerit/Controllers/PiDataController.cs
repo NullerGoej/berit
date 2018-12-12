@@ -60,13 +60,12 @@ namespace RestBerit.Controllers
                 return result;
         }
 
-        // GET: api/PiData/5
-        [HttpGet("{id}", Name = "GetPiData")]
-        public PiData GetPieData(int id)
+        // GET: api/?????/PiData
+        [Route("[action]")]
+        [HttpGet]
+        public PiData GetNewest()
         {
-            var result = new List<PiData>();
-
-            string getSql = "SELECT * FROM PiData WHERE pid =" + id;
+            string getSql = "SELECT TOP 1 * FROM PiData ORDER BY pid DESC";
 
             using (SqlConnection dbConnection = new SqlConnection(connection))
             {
@@ -94,13 +93,14 @@ namespace RestBerit.Controllers
 
                                 var pie = new PiData(pid, timestamp, temperatur);
 
-                                result.Add(pie);
+                                return pie;
                             }
                         }
-                    }    
+                    }
                 }
             }
-            return result.Single(x => x.pid.Equals(id));
+
+            return new PiData();
         }
 
         // POST: api/PiData
@@ -122,48 +122,6 @@ namespace RestBerit.Controllers
                     Console.WriteLine(rowsAffected + " row(s) affected");
                 }
             }
-        }
-
-        // PUT: api/PiData/5
-        [HttpPut("{id}")]
-        public PiData Put(int id, [FromBody] PiData pie)
-        {
-            PiData tempPie = GetPieData(id);
-            string updateSql = "UPDATE PiData SET timestamp = @timestamp, temperatur = @temperatur Where pid = @pid";
-
-            using (SqlConnection dbConnection = new SqlConnection(connection))
-            {
-                dbConnection.Open();
-
-                using (SqlCommand updateCommand = new SqlCommand(updateSql, dbConnection))
-                {
-
-
-                    updateCommand.Parameters.AddWithValue("@pid", id);
-
-                    if (tempPie.timestamp != pie.timestamp)
-                    {
-                        updateCommand.Parameters.AddWithValue("@timestamp", pie.timestamp);
-                    }
-                    else
-                    {
-                        updateCommand.Parameters.AddWithValue("@timestamp", tempPie.timestamp);
-                    }
-
-                    if (tempPie.temperatur != pie.temperatur)
-                    {
-                        updateCommand.Parameters.AddWithValue("@temperatur", pie.temperatur);
-                    }
-                    else
-                    {
-                        updateCommand.Parameters.AddWithValue("@temperatur", tempPie.temperatur);
-                    }
-
-                    int rowsAffected = updateCommand.ExecuteNonQuery();
-                    Console.WriteLine(rowsAffected + " row(s) affected");
-                }
-            }
-            return GetPieData(id);
         }
 
         // DELETE: api/ApiWithActions/5

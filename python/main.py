@@ -80,7 +80,7 @@ while True:
       timerMin += 1
      
   
-  if (timerMin == 10):
+  if (timerMin == 1):
       timerMin = 0
       # Send temp data to database every 10 minutes
       # Use the WebApp and a POST Request to send the data

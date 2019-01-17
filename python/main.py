@@ -69,6 +69,7 @@ while True:
   #forecast = condition.text
   
   temp = 100
+  forecast = "Sne"
 
   data = "Temperature: " + str(temp)
   
@@ -97,7 +98,7 @@ while True:
 
   for event in sense.stick.get_events():
       if (event.action == "pressed"):
-
+          
 
           msg = "Temperature"
           msg += ": "

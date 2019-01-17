@@ -68,7 +68,7 @@ while True:
   #temp = condition.temp
   #forecast = condition.text
   
-  temp = 11
+  temp = 5
   forecast = "Sunny"
 
   data = "Temperature: " + str(temp)

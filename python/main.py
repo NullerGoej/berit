@@ -74,6 +74,7 @@ while True:
   data = "Temperature: " + str(temp)
   
   timerSec += 1
+  print(timerSec)
  
   if (timerSec == 60):
       timerSec = 0

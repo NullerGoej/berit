@@ -14,7 +14,7 @@ namespace RestBerit.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private const string connection = "Server = tcp:berit.database.windows.net,1433;Initial Catalog = BeritDB; Persist Security Info=False;User ID = berit; Password=WT8mpDNwljGn;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout = 30;";
+        private const string connection = "Server=tcp:berit2.database.windows.net,1433;Initial Catalog=Berit2;Persist Security Info=False;User ID=berit;Password=Venadux123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
         // GET: api/User
         [HttpGet]
@@ -23,7 +23,7 @@ namespace RestBerit.Controllers
             var result = new List<Users>();
 
             //SQL command
-            string getSql = "SELECT * FROM Users";
+            string getSql = "SELECT * FROM dbo.Users";
 
             //SQL connection
             using (SqlConnection dbConnection = new SqlConnection(connection))

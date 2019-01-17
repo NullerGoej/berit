@@ -108,15 +108,14 @@ function ShowNewestTemperature(): void {
 // Adding a task
 function AddTask(): void {
     let title: string = (<HTMLInputElement>document.getElementById("taskTitle")).value;
-    let taskDate: Date = (<HTMLInputElement>document.getElementById("taskDate")).value;
+    let taskDate: Date = new Date(Date.parse((<HTMLInputElement>document.getElementById("taskDate")).value));
     let count: number = (<HTMLInputElement>document.getElementById("count")).valueAsNumber;
 
-    if (count == 0)
-    axios.post<Task>(uri + "task", {uid: 1, description: title, })
+    if (count == 0 || count == null)
+    axios.post<Task>(uri + "task", {uid: 1, description: title})
         .then((response: AxiosResponse) => { Return.innerHTML = "response " + response.status + " " + response.statusText; })
         .catch((error: AxiosError) => { Return.innerHTML = ""+error; });
     if (count > 0)
-    console.log(count)
     axios.post<ReTask>(uri + "taskRepeat", {uid: 1, description: title, count: count, completedate: taskDate})
         .then((response: AxiosResponse) => { Return.innerHTML = "response " + response.status + " " + response.statusText; })
         .catch((error: AxiosError) => { Return.innerHTML = ""+error; });

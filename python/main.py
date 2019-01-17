@@ -28,7 +28,7 @@ weather = Weather(unit=Unit.CELSIUS)
 s = socket(AF_INET, SOCK_DGRAM)
 
 # WebApp api uri
-weburi = 'http://berit.azurewebsites.net/api/PiData'
+weburi = 'https://beritapp2.azurewebsites.net/api/PiData'
 
 # Getting our public ip for the weather by location
 ip = get('https://api.ipify.org').text

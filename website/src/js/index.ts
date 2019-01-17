@@ -37,7 +37,7 @@ interface Alarm {
 
 var loading: string = "<h2>Loading...</h2>";
 
-var uri: string = "https://berit.azurewebsites.net/api/";
+var uri: string = "https://beritapp2.azurewebsites.net/api/";
 
 let Return: HTMLDivElement = <HTMLDivElement>document.getElementById("return");
 

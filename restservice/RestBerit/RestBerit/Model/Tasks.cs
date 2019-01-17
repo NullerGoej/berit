@@ -18,8 +18,9 @@ namespace RestBerit
         public string description { get; set; }
 
         public bool done { get; set; }
+        public bool repeat { get; set; }
 
-        public Tasks(int tid, int uid, DateTime timestamp, DateTime endstamp, string description, bool done)
+        public Tasks(int tid, int uid, DateTime timestamp, DateTime endstamp, string description, bool done, bool repeat)
         {
             this.tid = tid;
             this.uid = uid;
@@ -27,6 +28,7 @@ namespace RestBerit
             this.endstamp = endstamp;
             this.description = description;
             this.done = done;
+            this.repeat = repeat;
         }
 
         public Tasks()

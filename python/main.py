@@ -63,18 +63,17 @@ s.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 while True:
   # Look up weather by lat and lon
   
-  #lookup = weather.lookup_by_latlng(lat,lon)
-  #condition = lookup.condition
-  #temp = condition.temp
-  #forecast = condition.text
+  lookup = weather.lookup_by_latlng(lat,lon)
+  condition = lookup.condition
+  temp = condition.temp
+  forecast = condition.text
   
-  temp = 100
+  temp = 24
   forecast = "Sne"
 
   data = "Temperature: " + str(temp)
   
   timerSec += 1
-  print(timerSec)
  
   if (timerSec == 60):
       timerSec = 0
